@@ -11,6 +11,7 @@ The Facebook and Instagram ad kit and the landing page those ads point to.
 | [`marketing/facebook-ads.md`](marketing/facebook-ads.md) | 8 customer ads, 2 retargeting ads, 3 image ads and 3 recruiting ads. Each has hooks, a shot list, the voiceover word for word, the caption, headline and button. |
 | [`marketing/filming-guide.md`](marketing/filming-guide.md) | The 12 shots to film on every job, phone settings, voiceover recording, and CapCut editing. |
 | [`marketing/signup-funnel.md`](marketing/signup-funnel.md) | How customers and detailers sign up, deploying the page, lead texting templates, Ads Manager settings, what to measure. |
+| [`marketing/strategy.md`](marketing/strategy.md) | The go-to-market strategy: unit economics, why the landing-page-plus-SMS funnel beats app installs, which video to lead with, the 2-week creative test, budget, 90-day plan and KPIs. |
 | [`marketing/fix-before-launch.md`](marketing/fix-before-launch.md) | Contradictions in the apps and site that ads would expose, with file and line references. |
 
 ## Launch checklist
