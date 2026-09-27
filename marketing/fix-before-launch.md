@@ -1,5 +1,7 @@
 # Fix before you spend on ads
 
+> **Status (Sep 27):** the six "must fix" items below are done on branch `claude/marketing-fixes-10tfas` in `detail-on-demand-app` (commit `4dfc027`) and `detailondemand` (commit `03fd125`). Both build. Merge and deploy them. Still open: the "should fix" claims that need your confirmation, the detailer-side items, and the leftovers listed at the end.
+
 I read the customer app (`detail-on-demand-app`), both detailer apps (`updated-DODDetailer`, `detail-on-demand-detailer`) and the website (`detailondemand`). Several places contradict each other.
 
 Paid traffic makes these worse: every mismatch a new customer hits turns into a refund, a bad review, or a complaint to Facebook that can get the ad account restricted. They're sorted by how much they'd hurt a customer who arrives from an ad.
@@ -88,3 +90,14 @@ File paths point into those repos.
 - **Login first:** nothing is visible until the visitor signs in (`App.jsx:110–114`). Consider letting people see prices and pick a service before they log in.
 - **No Android or web link:** there's no Play Store listing and no public web URL in the code. Android users from ads can only use the landing page form.
 - **Services page "Book Now" goes nowhere useful** (see #4 above).
+
+---
+
+## Left open after the fix pass
+
+- `About.jsx:30` "Detailers below 4.5 stars are removed", and the "Licensed & Insured" / "Satisfaction Guaranteed" badges: policy claims, not verifiable from code. Confirm or remove.
+- `About.jsx:39` lists Dallas-area cities while the Contractor entity's `location_key` enum is Atlanta / Asheville / Scottsdale / Des Moines / Portland. Pick the real list.
+- `ReferralPage.jsx` is unlinked but still reachable at `/ReferralPage` with "$20" copy. Remove the route or make referrals work.
+- `BookCalendar.jsx` and the Ops payment-link generator are a separate legacy 25%/75% deposit flow. Nothing links to it now; delete it or keep it off.
+- `sendPaymentReceipt/entry.ts:30` says "Soonest Available (est. 2–4 hrs)". Confirm or drop the estimate.
+- Website JSON-LD now says card only and 8am–6pm; revert if you take cash or run 7am–7pm.
