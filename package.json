@@ -1,0 +1,9 @@
+{
+  "name": "dod-booking-page",
+  "private": true,
+  "description": "Detail On Demand booking landing page and its Stripe checkout functions",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "stripe": "^17.0.0"
+  }
+}

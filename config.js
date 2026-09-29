@@ -11,13 +11,18 @@ window.DOD_CONFIG = {
   city: "",
 
   // Where form submissions go. Fill in either one, or both.
-  //   Supabase: run supabase/leads.sql, then paste the project URL and the
-  //   public anon key (Supabase > Project Settings > API).
+  //   Supabase: run supabase/leads.sql and supabase/bookings_web.sql, then
+  //   paste the project URL and the public anon key (Project Settings > API).
   supabaseUrl: "",
   supabaseAnonKey: "",
   //   Webhook: a GoHighLevel, Zapier or Make "inbound webhook" URL. Fields
   //   arrive form-encoded: name, phone, zip, service, vehicle_size, price...
   webhookUrl: "",
+
+  // Card authorization. The booking page posts to this Vercel function, which
+  // opens Stripe Checkout in "hold, don't charge" mode. Needs STRIPE_SECRET_KEY
+  // and SITE_URL set in Vercel (see api/create-checkout.js). Leave as is.
+  checkoutEndpoint: "/api/create-checkout",
 
   // Meta Pixel ID (Events Manager > Data sources). Fires PageView on load,
   // Lead on a submitted form and Contact on a call or text tap.
