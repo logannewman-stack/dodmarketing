@@ -60,7 +60,8 @@ module.exports = async (req, res) => {
     service, vehicle_size: size, vehicle: clean(b.vehicle, 80), addons: addons.join(","),
     when, address: clean(b.address, 160), city: clean(b.city, 60), zip: clean(b.zip, 5), notes: clean(b.notes, 200),
     name: clean(b.name, 120), phone, promo: promo || "", total: String(total),
-    utm_source: clean(b.utm_source, 100), utm_campaign: clean(b.utm_campaign, 100), utm_content: clean(b.utm_content, 100)
+    utm_source: clean(b.utm_source, 100), utm_medium: clean(b.utm_medium, 100), utm_campaign: clean(b.utm_campaign, 100),
+    utm_content: clean(b.utm_content, 100), utm_term: clean(b.utm_term, 100), fbclid: clean(b.fbclid, 200)
   };
 
   try {

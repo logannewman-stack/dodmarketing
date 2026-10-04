@@ -19,6 +19,13 @@ window.DOD_CONFIG = {
   //   arrive form-encoded: name, phone, zip, service, vehicle_size, price...
   webhookUrl: "",
 
+  // Service area. Detail Pros only take jobs within about 15 miles, so list
+  // what an active pro covers. A ZIP that matches neither list goes to the
+  // "not there yet" waitlist screen instead of a card hold. Leave both empty
+  // and every ZIP is accepted (no check is shown).
+  servedZipPrefixes: [], // e.g. ["503", "502"]: every ZIP starting with these
+  servedZips: [],        // e.g. ["50309", "50312"]: exact ZIPs
+
   // Card authorization. The booking page posts to this Vercel function, which
   // opens Stripe Checkout in "hold, don't charge" mode. Needs STRIPE_SECRET_KEY
   // and SITE_URL set in Vercel (see api/create-checkout.js). Leave as is.
