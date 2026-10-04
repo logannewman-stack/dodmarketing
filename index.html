@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Book a Mobile Detail | Detail On Demand</title>
-<meta name="description" content="Book a full detail at your home or office in about a minute. Pick your vehicle, pick a time, and your card is only charged after the job is done.">
+<title>Get Your Price | Detail On Demand</title>
+<meta name="description" content="Answer 5 quick questions and see your exact price for a mobile detail at your home or office. Your card is only charged after the job is done.">
 <meta name="theme-color" content="#040D1F">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Detail On Demand">
 <meta property="og:title" content="Your car, detailed. In your driveway.">
-<meta property="og:description" content="Full detail inside and out from $199. Book in a minute, pay after it's done.">
+<meta property="og:description" content="5 quick questions, then your exact price. Full detail from $199. Pay after it's done.">
 <meta property="og:image" content="https://media.base44.com/images/public/69136a3fc805225b2d601639/95442638e_Image9-20-25at933PM.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="https://media.base44.com/images/public/6a10d3cf0e2c0b52f6df464e/80a2ae405_generated_image.png">
@@ -29,215 +29,175 @@
     --on-dark: #E6EEF9; --on-dark-muted: #9FB2CC;
     --display: "Oswald", "Arial Narrow", "Roboto Condensed", Arial, sans-serif;
     --text: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --shadow: 0 24px 60px -24px rgba(4,13,31,.55), 0 2px 6px rgba(4,13,31,.08);
+    --shadow: 0 24px 60px -24px rgba(4,13,31,.6), 0 2px 6px rgba(4,13,31,.08);
   }
   *, *::before, *::after { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--tint); color: var(--body); font: 400 16px/1.55 var(--text); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; min-height: 100vh; background: var(--night); color: var(--on-dark); font: 400 16px/1.5 var(--text); -webkit-font-smoothing: antialiased; }
   img { max-width: 100%; display: block; }
   a { color: inherit; }
   [hidden] { display: none !important; }
-  button, input, select { font: inherit; color: inherit; }
+  button, input { font: inherit; color: inherit; }
   :focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
-  h1, h2, h3 { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .01em; line-height: 1; margin: 0; text-wrap: balance; color: var(--ink); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .01em; line-height: 1; margin: 0; text-wrap: balance; }
   p { margin: 0; }
-  .wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 20px; }
 
-  /* Buttons */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; padding: 0 24px; border: 0; border-radius: 12px; font: 600 .95rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .15s, transform .15s, opacity .15s; }
-  .btn:active { transform: translateY(1px); }
-  .btn[disabled] { opacity: .55; cursor: not-allowed; }
-  .btn-primary { background: var(--blue); color: #fff; }
-  .btn-primary:hover { background: var(--blue-press); }
-  .btn-quiet { background: transparent; color: var(--body); box-shadow: inset 0 0 0 1.5px var(--line); }
-  .btn-quiet:hover { background: #fff; }
-  .btn svg { width: 18px; height: 18px; flex: none; }
+  /* Backdrop: the app's splash gradient with a photo washed in behind it */
+  .bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(160deg, var(--night) 0%, var(--deep) 45%, var(--navy) 100%); overflow: hidden; }
+  .bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .22; }
+  .bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(55% 45% at 80% 10%, rgba(10,132,255,.35), transparent 70%), linear-gradient(180deg, rgba(4,13,31,.5), rgba(4,13,31,.1) 40%, rgba(4,13,31,.85)); }
 
-  /* Header band */
-  .top { background: linear-gradient(160deg, var(--night) 0%, var(--deep) 45%, var(--navy) 100%); color: var(--on-dark); padding-top: env(safe-area-inset-top, 0px); position: relative; overflow: hidden; }
-  .top::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 85% 10%, rgba(10,132,255,.3), transparent 70%); pointer-events: none; }
-  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; position: relative; }
-  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
-  .brand-logo { height: 40px; width: auto; max-width: 150px; object-fit: contain; }
-  .brand-word { font: 600 1.05rem/1 var(--display); letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; }
+  .shell { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px); }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 16px; max-width: 560px; width: 100%; margin-inline: auto; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+  .brand-logo { height: 36px; width: auto; max-width: 140px; object-fit: contain; }
+  .brand-word { font: 600 1rem/1 var(--display); letter-spacing: .18em; text-transform: uppercase; white-space: nowrap; }
   .brand-word b { font-weight: 600; color: var(--sky); }
-  .topbar-call { display: inline-flex; align-items: center; gap: 8px; font: 500 .9rem/1 var(--text); color: var(--on-dark); text-decoration: none; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,.08); }
-  .topbar-call svg { width: 16px; height: 16px; }
-  @media (max-width: 440px) { .brand-word { font-size: .9rem; letter-spacing: .14em; } .brand-logo { height: 32px; } .topbar-call span { display: none; } }
+  .top-call { display: inline-flex; align-items: center; gap: 8px; font: 500 .85rem/1 var(--text); text-decoration: none; padding: 9px 13px; border-radius: 999px; background: rgba(255,255,255,.08); }
+  .top-call svg { width: 15px; height: 15px; }
+  @media (max-width: 400px) { .top-call span { display: none; } }
 
-  .hero { position: relative; display: grid; gap: 14px; padding-block: 18px 40px; max-width: 720px; }
-  .live { display: inline-flex; align-items: center; gap: 10px; width: fit-content; font: 600 .72rem/1 var(--text); letter-spacing: .14em; text-transform: uppercase; padding: 8px 13px 8px 11px; border-radius: 999px; background: rgba(96,165,250,.14); box-shadow: inset 0 0 0 1px rgba(96,165,250,.35); }
-  .live i { width: 8px; height: 8px; border-radius: 50%; background: #3DDC84; animation: ping 2s ease-out infinite; }
-  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(61,220,132,.55); } 80%, 100% { box-shadow: 0 0 0 10px rgba(61,220,132,0); } }
-  .hero h1 { color: #fff; font-size: clamp(2.4rem, 8.5vw, 4.2rem); line-height: .94; font-weight: 700; }
-  .hero h1 span { color: var(--sky); }
-  .hero p { color: var(--on-dark); font-size: 1.05rem; max-width: 34em; }
-  .hero p strong { color: #fff; font-weight: 600; }
-  .proof { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0; list-style: none; }
-  .proof li { display: inline-flex; align-items: center; gap: 7px; font-size: .9rem; color: var(--on-dark); }
-  .proof svg { width: 17px; height: 17px; color: var(--sky); flex: none; }
-
-  /* Layout: booking card + sticky summary */
-  .main { position: relative; z-index: 1; margin-top: -18px; padding-bottom: 56px; }
-  .grid { display: grid; gap: 20px; align-items: start; }
-  @media (min-width: 960px) { .grid { grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; } .summary { position: sticky; top: 16px; } }
-
-  .card { background: var(--paper); border-radius: 20px; box-shadow: var(--shadow); padding: clamp(20px, 4vw, 30px); }
+  .stage { width: 100%; max-width: 560px; margin-inline: auto; display: grid; align-content: start; gap: 18px; padding-block: 8px 24px; }
 
   /* Progress */
-  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 22px; }
-  .steps li { list-style: none; display: grid; gap: 8px; }
-  .steps i { display: block; height: 4px; border-radius: 4px; background: var(--line); }
-  .steps span { font: 600 .68rem/1.2 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .steps li.done i, .steps li.now i { background: var(--blue); }
-  .steps li.now span { color: var(--ink); }
-  .steps { padding: 0; margin-top: 0; }
+  .progress { display: flex; align-items: center; gap: 12px; font: 600 .7rem/1 var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--on-dark-muted); }
+  .progress .bar { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,.12); overflow: hidden; }
+  .progress .bar i { display: block; height: 100%; width: 0; background: var(--sky); border-radius: 4px; transition: width .35s ease; }
+  .back { background: none; border: 0; padding: 6px 0; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; color: var(--on-dark-muted); font: 500 .85rem/1 var(--text); }
+  .back:hover { color: #fff; }
+  .back svg { width: 16px; height: 16px; }
 
-  .panel { display: grid; gap: 18px; }
-  .panel-head { display: grid; gap: 6px; }
-  .panel-head h2 { font-size: 1.7rem; }
-  .panel-head p { font-size: .95rem; }
-  .field { display: grid; gap: 6px; }
-  .label { font: 600 .8rem/1.2 var(--text); color: var(--ink); }
-  .field input, .field select { width: 100%; min-height: 50px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; font-size: 16px; color: var(--ink); }
-  .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%2364748B' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
-  .field input:focus, .field select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(10,132,255,.15); }
-  .field input[aria-invalid="true"] { border-color: var(--bad); }
-  .row2 { display: grid; gap: 12px; grid-template-columns: 1fr; }
-  @media (min-width: 420px) { .row2 { grid-template-columns: 1fr 1fr; } }
-  .hint { font-size: .8rem; color: var(--muted); }
+  /* Screens */
+  .screen { display: grid; gap: 18px; animation: rise .35s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .q { color: #fff; font-size: clamp(1.9rem, 7vw, 2.7rem); }
+  .q span { color: var(--sky); }
+  .sub { color: var(--on-dark); font-size: 1rem; max-width: 34em; }
 
-  /* Choice tiles */
-  .tiles { display: grid; gap: 10px; }
-  .tiles.two { grid-template-columns: repeat(2, 1fr); }
-  .tiles.four { grid-template-columns: repeat(4, 1fr); }
-  .tile { position: relative; cursor: pointer; }
-  .tile input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .tile > span { display: grid; gap: 4px; min-height: 100%; padding: 14px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; transition: border-color .15s, box-shadow .15s, background-color .15s; }
-  .tile input:checked + span { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(10,132,255,.15); background: #F5FAFF; }
-  .tile input:focus-visible + span { outline: 3px solid var(--sky); outline-offset: 2px; }
-  .tile .t-name { font: 600 .95rem/1.25 var(--text); color: var(--ink); display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-  .tile .t-price { font: 700 1.05rem/1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .tile .t-desc { font-size: .82rem; color: var(--muted); line-height: 1.4; }
-  .tile .t-tag { justify-self: start; font: 600 .62rem/1 var(--text); letter-spacing: .1em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; background: var(--blue); color: #fff; margin-bottom: 2px; }
-  .tile.size > span { align-items: center; justify-items: center; text-align: center; padding: 10px 6px; }
-  .tile.size svg { width: 32px; height: 17px; color: var(--ink); }
-  .tile.size .t-name { font-size: .85rem; }
-  .tile.size .t-desc { font-size: .72rem; }
+  /* Hero (screen 0) */
+  .hero { gap: 20px; padding-top: 12px; }
+  .live { display: inline-flex; align-items: center; gap: 10px; width: fit-content; font: 600 .7rem/1 var(--text); letter-spacing: .14em; text-transform: uppercase; padding: 8px 13px 8px 11px; border-radius: 999px; background: rgba(96,165,250,.14); box-shadow: inset 0 0 0 1px rgba(96,165,250,.35); }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: #3DDC84; animation: ping 2s ease-out infinite; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(61,220,132,.55); } 80%, 100% { box-shadow: 0 0 0 10px rgba(61,220,132,0); } }
+  .hero h1 { color: #fff; font-size: clamp(2.8rem, 12vw, 4.6rem); line-height: .92; font-weight: 700; }
+  .hero h1 span { color: var(--sky); display: block; }
+  .hero .sub { font-size: 1.1rem; }
+  .hero .sub strong { color: #fff; font-weight: 600; }
+  .proof { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+  .proof li { display: flex; align-items: center; gap: 10px; font-size: .95rem; }
+  .proof svg { width: 20px; height: 20px; color: var(--sky); flex: none; }
+  .price-tease { display: flex; align-items: baseline; gap: 10px; padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); }
+  .price-tease b { font: 700 2rem/1 var(--display); color: #fff; }
+  .price-tease small { font-size: .85rem; color: var(--on-dark-muted); }
+  .hero-foot { font-size: .8rem; color: var(--on-dark-muted); }
+  .cta-note { text-align: center; font-size: .8rem; color: var(--on-dark-muted); }
 
-  .addons { display: grid; gap: 8px; }
-  .addon { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; cursor: pointer; }
-  .addon input { width: 20px; height: 20px; margin: 0; accent-color: var(--blue); }
-  .addon:has(input:checked) { border-color: var(--blue); background: #F5FAFF; }
-  .addon b { font-weight: 600; color: var(--ink); font-size: .93rem; }
-  .addon small { display: block; color: var(--muted); font-size: .78rem; }
-  .addon .a-price { font: 700 1rem/1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 58px; padding: 0 24px; border: 0; border-radius: 14px; font: 600 1rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .15s, transform .15s, opacity .15s; width: 100%; }
+  .btn:active { transform: translateY(1px); }
+  .btn[disabled] { opacity: .55; cursor: not-allowed; }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 12px 30px -10px rgba(10,132,255,.7); }
+  .btn-primary:hover { background: var(--blue-press); }
+  .btn-ghost { background: transparent; color: var(--on-dark); box-shadow: inset 0 0 0 1.5px rgba(230,238,249,.3); min-height: 50px; font-size: .85rem; }
+  .btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--on-dark); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
 
-  /* Dates and times */
+  /* Multiple choice: one tap advances */
+  .choices { display: grid; gap: 10px; }
+  .choices.grid2 { grid-template-columns: 1fr 1fr; }
+  .choice { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; width: 100%; min-height: 64px; padding: 14px 16px; border: 0; border-radius: 14px; background: #fff; color: var(--ink); text-align: left; cursor: pointer; box-shadow: 0 1px 2px rgba(4,13,31,.1); transition: transform .12s, box-shadow .12s; }
+  .choice:hover { transform: translateY(-1px); box-shadow: 0 8px 20px -10px rgba(4,13,31,.6); }
+  .choice:active { transform: translateY(1px); }
+  .choice.on { box-shadow: 0 0 0 3px var(--blue); }
+  .choice .ico { width: 44px; height: 30px; display: grid; place-items: center; color: var(--ink); }
+  .choice .ico svg { width: 40px; height: 22px; }
+  .choice .ico.round { width: 40px; height: 40px; border-radius: 10px; background: var(--tint); color: var(--blue); }
+  .choice .ico.round svg { width: 20px; height: 20px; }
+  .choice b { display: block; font: 600 1rem/1.2 var(--text); }
+  .choice small { display: block; font-size: .8rem; color: var(--muted); margin-top: 2px; }
+  .choice .arrow { width: 18px; height: 18px; color: var(--muted); }
+  .choices.grid2 .choice { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 16px 10px; gap: 8px; }
+  .choices.grid2 .choice .arrow { display: none; }
+
+  /* Inputs */
+  .field { display: grid; gap: 8px; }
+  .field label { font: 600 .78rem/1.2 var(--text); letter-spacing: .06em; text-transform: uppercase; color: var(--on-dark-muted); }
+  .field input { width: 100%; min-height: 58px; padding: 0 16px; border: 1.5px solid rgba(255,255,255,.18); border-radius: 14px; background: rgba(255,255,255,.06); font-size: 18px; color: #fff; }
+  .field input::placeholder { color: rgba(230,238,249,.4); }
+  .field input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 4px rgba(96,165,250,.2); background: rgba(255,255,255,.1); }
+  .field input[aria-invalid="true"] { border-color: #FF7A7A; }
+  .field .hint { font-size: .8rem; color: var(--on-dark-muted); }
+  .form-error { font-size: .88rem; color: #FF9A9A; }
+  .legal { font-size: .72rem; line-height: 1.45; color: var(--on-dark-muted); }
+  .legal a { color: var(--on-dark-muted); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* Price reveal card */
+  .card { background: var(--paper); color: var(--body); border-radius: 20px; box-shadow: var(--shadow); padding: 24px; display: grid; gap: 14px; }
+  .card h2 { color: var(--ink); font-size: 1.6rem; }
+  .reveal-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .reveal-top small { font-size: .82rem; color: var(--muted); }
+  .reveal-amt { font: 700 3.4rem/1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
+  .reveal-amt small { font: 500 .9rem/1 var(--text); color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+  .incl { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .incl li { display: flex; gap: 10px; align-items: flex-start; font-size: .93rem; color: var(--ink); }
+  .incl svg { width: 18px; height: 18px; color: var(--good); flex: none; margin-top: 2px; }
+  .lines { display: grid; gap: 6px; font-size: .9rem; padding-top: 10px; border-top: 1px solid var(--line); }
+  .lines div { display: flex; justify-content: space-between; gap: 12px; }
+  .lines .k { color: var(--muted); } .lines .v { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .pay-note { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; background: var(--tint); font-size: .85rem; color: var(--body); }
+  .pay-note .ico { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; background: #fff; color: var(--blue); }
+  .pay-note .ico svg { width: 19px; height: 19px; }
+  .pay-note b { display: block; color: var(--ink); font-weight: 600; }
+
+  /* Add-on chips */
+  .chips { display: grid; gap: 8px; }
+  .chip { display: grid; grid-template-columns: 24px 1fr auto; gap: 12px; align-items: center; min-height: 56px; padding: 10px 14px; border-radius: 12px; background: #fff; color: var(--ink); cursor: pointer; }
+  .chip input { width: 22px; height: 22px; margin: 0; accent-color: var(--blue); }
+  .chip:has(input:checked) { box-shadow: 0 0 0 3px var(--blue); }
+  .chip b { font-weight: 600; font-size: .95rem; }
+  .chip .p { font: 700 1rem/1 var(--display); font-variant-numeric: tabular-nums; }
+
+  /* Day / time */
   .dates { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
   .date { position: relative; cursor: pointer; }
   .date input { position: absolute; opacity: 0; inset: 0; margin: 0; }
-  .date > span { display: grid; place-items: center; gap: 2px; padding: 10px 2px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; }
-  .date .d-dow { font: 600 .62rem/1 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .date .d-num { font: 700 1.25rem/1 var(--display); color: var(--ink); }
-  .date .d-mon { font-size: .68rem; color: var(--muted); }
-  .date input:checked + span { border-color: var(--blue); background: #F5FAFF; box-shadow: 0 0 0 3px rgba(10,132,255,.15); }
+  .date > span { display: grid; place-items: center; gap: 2px; padding: 10px 2px; border-radius: 12px; background: #fff; color: var(--ink); }
+  .date .d-dow { font: 600 .6rem/1 var(--text); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .date .d-num { font: 700 1.25rem/1 var(--display); }
+  .date .d-mon { font-size: .66rem; color: var(--muted); }
+  .date input:checked + span { box-shadow: 0 0 0 3px var(--blue); }
   .date input:focus-visible + span { outline: 3px solid var(--sky); }
   .times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  @media (min-width: 560px) { .times { grid-template-columns: repeat(5, 1fr); } }
   .time { position: relative; cursor: pointer; }
   .time input { position: absolute; opacity: 0; inset: 0; margin: 0; }
-  .time > span { display: grid; place-items: center; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; font: 600 .88rem/1 var(--text); color: var(--ink); font-variant-numeric: tabular-nums; }
-  .time input:checked + span { border-color: var(--blue); background: var(--blue); color: #fff; }
-  .time input:disabled + span { opacity: .35; text-decoration: line-through; cursor: not-allowed; }
+  .time > span { display: grid; place-items: center; min-height: 46px; border-radius: 10px; background: #fff; color: var(--ink); font: 600 .88rem/1 var(--text); font-variant-numeric: tabular-nums; }
+  .time input:checked + span { background: var(--blue); color: #fff; }
+  .time input:disabled + span { opacity: .3; cursor: not-allowed; }
   .time input:focus-visible + span { outline: 3px solid var(--sky); }
-  .asap { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start; padding: 14px; border: 1.5px dashed var(--blue); border-radius: 12px; background: var(--tint); cursor: pointer; }
-  .asap input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--blue); }
-  .asap b { color: var(--ink); font-weight: 600; }
-  .asap small { display: block; color: var(--muted); font-size: .8rem; }
+  .asap { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: center; padding: 14px; border-radius: 14px; background: rgba(96,165,250,.12); box-shadow: inset 0 0 0 1.5px rgba(96,165,250,.45); cursor: pointer; }
+  .asap input { width: 22px; height: 22px; margin: 0; accent-color: var(--blue); }
+  .asap b { color: #fff; font-weight: 600; display: block; }
+  .asap small { font-size: .8rem; color: var(--on-dark-muted); }
 
-  /* Review */
-  .review { display: grid; gap: 10px; }
-  .review-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .review { display: grid; gap: 8px; }
+  .review-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: .9rem; }
   .review-row span:first-child { color: var(--muted); }
   .review-row span:last-child { color: var(--ink); font-weight: 500; text-align: right; }
-  .promo { display: flex; gap: 8px; }
-  .promo input { flex: 1; text-transform: uppercase; }
-  .promo .btn { min-height: 50px; padding: 0 16px; font-size: .8rem; }
-  .assure { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; padding: 14px; border-radius: 12px; background: var(--night); color: var(--on-dark); }
-  .assure .ico { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: rgba(96,165,250,.16); color: var(--sky); }
-  .assure .ico svg { width: 22px; height: 22px; }
-  .assure b { display: block; color: #fff; font-weight: 600; }
-  .assure small { font-size: .82rem; color: var(--on-dark-muted); }
-  .legal { font-size: .74rem; line-height: 1.45; color: var(--muted); }
-  .legal a { color: var(--muted); }
-  .form-error { font-size: .88rem; color: var(--bad); }
-  .nav { display: flex; gap: 10px; justify-content: space-between; align-items: center; margin-top: 4px; }
-  .nav .btn-primary { flex: 1; }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-  /* Summary card */
-  .summary { display: grid; gap: 14px; }
-  .summary .card { padding: 22px; }
-  .sum-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-  .sum-head h3 { font-size: 1.15rem; }
-  .sum-head small { font-size: .78rem; color: var(--muted); }
-  .sum-lines { display: grid; gap: 8px; font-size: .92rem; }
-  .sum-lines div { display: flex; justify-content: space-between; gap: 12px; }
-  .sum-lines .k { color: var(--muted); }
-  .sum-lines .v { color: var(--ink); font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
-  .sum-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-top: 12px; border-top: 1.5px solid var(--line); }
-  .sum-total b { font: 600 .85rem/1 var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
-  .sum-total .amt { font: 700 2.1rem/1 var(--display); color: var(--ink); font-variant-numeric: tabular-nums; }
-  .sum-note { font-size: .8rem; color: var(--muted); }
-  .trust { display: grid; gap: 10px; }
-  .trust li { list-style: none; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; font-size: .88rem; }
-  .trust .ico { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--tint); color: var(--blue); }
-  .trust .ico svg { width: 17px; height: 17px; }
-  .trust b { display: block; color: var(--ink); font-weight: 600; }
-  .trust ul { padding: 0; margin: 0; }
-  .work { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .work figure { margin: 0; border-radius: 12px; overflow: hidden; aspect-ratio: 1; background: var(--deep); }
-  .work img { width: 100%; height: 100%; object-fit: cover; }
-  .reviews { display: grid; gap: 10px; }
-  .review-card { padding: 14px; border-radius: 12px; background: var(--tint); font-size: .9rem; }
-  .review-card .stars { color: #F5A623; letter-spacing: 2px; font-size: .8rem; }
-  .review-card p { color: var(--ink); margin: 4px 0; }
-  .review-card footer { font-size: .78rem; color: var(--muted); }
+  .done { gap: 14px; }
+  .done-mark { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: rgba(61,220,132,.14); color: #3DDC84; }
+  .done-mark svg { width: 30px; height: 30px; }
 
-  /* FAQ */
-  .faq { max-width: 760px; margin-top: 36px; }
-  .faq h2 { font-size: 1.6rem; margin-bottom: 8px; }
-  .faq details { border-bottom: 1px solid var(--line); }
-  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; font: 600 .98rem/1.35 var(--text); color: var(--ink); }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; font: 500 1.5rem/1 var(--display); color: var(--blue); transition: transform .2s; }
-  .faq details[open] summary::after { transform: rotate(45deg); }
-  .faq details p { padding: 0 0 16px; max-width: 62ch; font-size: .95rem; }
-
-  footer.site { background: var(--night); color: var(--on-dark-muted); padding-block: 36px calc(36px + env(safe-area-inset-bottom, 0px)); font-size: .88rem; }
-  footer.site .wrap { display: grid; gap: 18px; }
-  .foot-links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
-  .foot-links a { text-decoration: none; color: var(--on-dark); }
-  @media (min-width: 760px) { footer.site .wrap { grid-template-columns: 1fr auto; align-items: center; } }
-
-  /* Mobile total bar */
-  .mbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(4,13,31,.95); color: var(--on-dark); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-  .mbar small { display: block; font-size: .72rem; color: var(--on-dark-muted); }
-  .mbar .amt { font: 700 1.5rem/1 var(--display); color: #fff; font-variant-numeric: tabular-nums; }
-  .mbar .btn { min-height: 46px; padding: 0 18px; font-size: .85rem; }
-  @media (min-width: 960px) { .mbar { display: none; } }
-  @media (max-width: 959px) { body { padding-bottom: 76px; } }
-
-  .done { display: grid; gap: 14px; }
-  .done-mark { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: rgba(31,168,85,.12); color: var(--good); }
-  .done-mark svg { width: 28px; height: 28px; }
-  .done h2 { font-size: 1.9rem; }
+  footer.site { max-width: 560px; width: 100%; margin-inline: auto; padding-block: 20px 28px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .78rem; color: var(--on-dark-muted); }
+  footer.site a { text-decoration: none; }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
+
+<div class="bg" aria-hidden="true"><img src="https://media.base44.com/images/public/69136a3fc805225b2d601639/95442638e_Image9-20-25at933PM.jpg" alt="" data-optional-img></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -246,253 +206,195 @@
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 1 1 13 0c0 5-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
-  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.1-5M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-seat" viewBox="0 0 24 24"><path d="M7 4h7l1.5 9H8.5zM5 13h12l1 6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-both" viewBox="0 0 24 24"><path d="M12 3v18M4 12h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-shine" viewBox="0 0 24 24"><path d="M12 3l2 5.5L19.5 10 14 12l-2 5.5L10 12 4.5 10 10 8.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-q" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9.8 9.5a2.2 2.2 0 1 1 3.2 2c-.8.4-1 .9-1 1.7M12 16.5v.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="car-sedan" viewBox="0 0 60 30"><path d="M4 22h52v-4l-6-2-8-7H20l-8 7-8 2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="16" cy="23" r="4" fill="currentColor"/><circle cx="44" cy="23" r="4" fill="currentColor"/></symbol>
   <symbol id="car-suv" viewBox="0 0 60 30"><path d="M4 22h52v-7l-6-2-6-7H12l-6 7-2 2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="16" cy="23" r="4" fill="currentColor"/><circle cx="44" cy="23" r="4" fill="currentColor"/></symbol>
   <symbol id="car-truck" viewBox="0 0 60 30"><path d="M4 22h52v-8H32V6H18l-7 8H4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="15" cy="23" r="4" fill="currentColor"/><circle cx="45" cy="23" r="4" fill="currentColor"/></symbol>
   <symbol id="car-van" viewBox="0 0 60 30"><path d="M3 22h54v-9l-7-7H8L3 12z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="15" cy="23" r="4" fill="currentColor"/><circle cx="45" cy="23" r="4" fill="currentColor"/></symbol>
 </svg>
 
-<header class="top">
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="#" aria-label="Detail On Demand">
-        <img class="brand-logo" src="https://media.base44.com/images/public/69b386fdacb6e6cce694ecf9/ad8e5a2d8_detail_on_demand_v4_transparent.png?v=3" alt="" height="40" data-logo>
-        <span class="brand-word">Detail <b>On Demand</b></span>
-      </a>
-      <a class="topbar-call" href="tel:+14247227053" data-tel data-track="Contact"><svg aria-hidden="true"><use href="#i-phone"/></svg><span data-phone>(424) 722-7053</span></a>
-    </div>
-    <div class="hero">
-      <p class="live"><i aria-hidden="true"></i><span data-city-line>Booking this week, we come to you</span></p>
-      <h1>Your car, detailed. <span>In your driveway.</span></h1>
-      <p>Pick your vehicle and a time. A vetted Detail Pro comes to you. <strong>Your card is held, not charged, until the job's done.</strong></p>
-      <ul class="proof">
-        <li><svg aria-hidden="true"><use href="#i-card"/></svg>Charged after, not before</li>
-        <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Home, office or apartment lot</li>
-        <li><svg aria-hidden="true"><use href="#i-shield"/></svg>Vetted, rated pros</li>
-      </ul>
-    </div>
-  </div>
-</header>
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="#" data-home aria-label="Detail On Demand">
+      <img class="brand-logo" src="https://media.base44.com/images/public/69b386fdacb6e6cce694ecf9/ad8e5a2d8_detail_on_demand_v4_transparent.png?v=3" alt="" height="36" data-logo>
+      <span class="brand-word">Detail <b>On Demand</b></span>
+    </a>
+    <a class="top-call" href="tel:+14247227053" data-tel><svg aria-hidden="true"><use href="#i-phone"/></svg><span data-phone>(424) 722-7053</span></a>
+  </header>
 
-<main class="main">
-  <div class="wrap grid">
+  <main class="stage">
+    <div class="progress" data-progress hidden><button class="back" type="button" data-back><svg aria-hidden="true"><use href="#i-back"/></svg>Back</button><div class="bar"><i data-bar></i></div><span data-step-label>1 of 6</span></div>
 
-    <form class="card" id="book" novalidate>
-      <ol class="steps" data-steps>
-        <li class="now"><i></i><span>1 Service</span></li>
-        <li><i></i><span>2 Time</span></li>
-        <li><i></i><span>3 Details</span></li>
-        <li><i></i><span>4 Payment</span></li>
-      </ol>
+    <form id="flow" novalidate>
 
-      <!-- Step 1: service, vehicle, add-ons -->
-      <section class="panel" data-panel="1">
-        <div class="panel-head">
-          <h2>What are we detailing?</h2>
-          <p>Prices are what you'll see on the day. No surprises at the door.</p>
-        </div>
-
-        <div class="field">
-          <span class="label">Service</span>
-          <div class="tiles two" data-services></div>
-        </div>
-
-        <div class="field">
-          <span class="label">Vehicle size</span>
-          <div class="tiles four">
-            <label class="tile size"><input type="radio" name="size" value="sedan" checked data-size><span><svg aria-hidden="true"><use href="#car-sedan"/></svg><span class="t-name">Car</span><span class="t-desc">sedan, coupe</span></span></label>
-            <label class="tile size"><input type="radio" name="size" value="suv" data-size><span><svg aria-hidden="true"><use href="#car-suv"/></svg><span class="t-name">SUV</span><span class="t-desc">crossover</span></span></label>
-            <label class="tile size"><input type="radio" name="size" value="truck" data-size><span><svg aria-hidden="true"><use href="#car-truck"/></svg><span class="t-name">Truck</span><span class="t-desc">pickup</span></span></label>
-            <label class="tile size"><input type="radio" name="size" value="three_row" data-size><span><svg aria-hidden="true"><use href="#car-van"/></svg><span class="t-name">3-Row</span><span class="t-desc">large SUV, minivan</span></span></label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label" for="f-vehicle">Year, make and model</label>
-          <input id="f-vehicle" name="vehicle" placeholder="2021 Honda Odyssey" autocomplete="off" required>
-        </div>
-
-        <div class="field">
-          <span class="label">Add-ons <span class="hint">(optional)</span></span>
-          <div class="addons" data-addons></div>
-        </div>
-
-        <div class="nav"><button class="btn btn-primary" type="button" data-next>Choose a time</button></div>
+      <!-- 0 · Hero: one promise, one button -->
+      <section class="screen hero" data-screen="hero">
+        <p class="live"><i aria-hidden="true"></i><span data-city-line>Booking this week · we come to you</span></p>
+        <h1>Your car, detailed.<span>In your driveway.</span></h1>
+        <p class="sub">A vetted Detail Pro comes to your home or office. <strong>You don't pay until it's done.</strong></p>
+        <div class="price-tease"><b>$199</b><small>full detail, inside and out, for a car. See your exact price in 60 seconds.</small></div>
+        <ul class="proof">
+          <li><svg aria-hidden="true"><use href="#i-card"/></svg>Card charged after the job, never before</li>
+          <li><svg aria-hidden="true"><use href="#i-pin"/></svg>Driveway, office lot or apartment parking</li>
+          <li><svg aria-hidden="true"><use href="#i-shield"/></svg>See your pro's rating before they arrive</li>
+        </ul>
+        <button class="btn btn-primary" type="button" data-start>Get my price<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <p class="cta-note">5 quick questions. No account, no card needed to see your price.</p>
       </section>
 
-      <!-- Step 2: when -->
-      <section class="panel" data-panel="2" hidden>
-        <div class="panel-head">
-          <h2>When works for you?</h2>
-          <p>Seven days a week. Your pro confirms the exact time by text within the hour.</p>
-        </div>
-
-        <label class="asap" for="f-asap">
-          <input id="f-asap" type="checkbox" name="asap" data-asap>
-          <span><b>Soonest available</b><small>We send your request to pros nearby and text you the first opening, usually today or tomorrow.</small></span>
-        </label>
-
-        <div data-schedule>
-          <div class="field">
-            <span class="label">Day</span>
-            <div class="dates" data-dates></div>
-          </div>
-          <div class="field" style="margin-top:14px">
-            <span class="label">Start time</span>
-            <div class="times" data-times></div>
-            <span class="hint">Most details take 2–3 hours. Paint correction and ceramic coating take longer; we'll confirm the finish time.</span>
-          </div>
-        </div>
-
-        <p class="form-error" role="alert" data-error="2" hidden></p>
-        <div class="nav">
-          <button class="btn btn-quiet" type="button" data-back>Back</button>
-          <button class="btn btn-primary" type="button" data-next>Where's the car?</button>
+      <!-- 1 · Vehicle -->
+      <section class="screen" data-screen="size" hidden>
+        <h2 class="q">What do you drive?</h2>
+        <div class="choices grid2" data-choice="size">
+          <button class="choice" type="button" value="sedan"><span class="ico"><svg aria-hidden="true"><use href="#car-sedan"/></svg></span><span><b>Car</b><small>sedan, coupe, hatchback</small></span></button>
+          <button class="choice" type="button" value="suv"><span class="ico"><svg aria-hidden="true"><use href="#car-suv"/></svg></span><span><b>SUV</b><small>crossover, midsize</small></span></button>
+          <button class="choice" type="button" value="truck"><span class="ico"><svg aria-hidden="true"><use href="#car-truck"/></svg></span><span><b>Truck</b><small>pickup</small></span></button>
+          <button class="choice" type="button" value="three_row"><span class="ico"><svg aria-hidden="true"><use href="#car-van"/></svg></span><span><b>3-Row</b><small>large SUV, minivan</small></span></button>
         </div>
       </section>
 
-      <!-- Step 3: where and who -->
-      <section class="panel" data-panel="3" hidden>
-        <div class="panel-head">
-          <h2>Where's the car parked?</h2>
-          <p>Driveway, office lot or apartment parking. Your pro needs space to open every door.</p>
+      <!-- 2 · Need -->
+      <section class="screen" data-screen="service" hidden>
+        <h2 class="q">What does it need most?</h2>
+        <div class="choices" data-choice="service">
+          <button class="choice" type="button" value="full_detail"><span class="ico round"><svg aria-hidden="true"><use href="#i-both"/></svg></span><span><b>Inside and out</b><small>Full detail. Our most popular.</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="interior"><span class="ico round"><svg aria-hidden="true"><use href="#i-seat"/></svg></span><span><b>Just the inside</b><small>Seats, carpets, vents, leather</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="paint_correction"><span class="ico round"><svg aria-hidden="true"><use href="#i-shine"/></svg></span><span><b>Fix the paint</b><small>Swirls, scratches, dull finish</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="not_sure"><span class="ico round"><svg aria-hidden="true"><use href="#i-q"/></svg></span><span><b>Not sure</b><small>We'll recommend the right one</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
         </div>
+      </section>
 
-        <div class="field">
-          <label class="label" for="f-address">Street address</label>
-          <input id="f-address" name="address" autocomplete="street-address" placeholder="123 Main St" required>
+      <!-- 3 · Condition -->
+      <section class="screen" data-screen="condition" hidden>
+        <h2 class="q">How bad is it? <span>Be honest.</span></h2>
+        <div class="choices" data-choice="condition">
+          <button class="choice" type="button" value="light"><span class="ico round">🙂</span><span><b>Just needs a refresh</b><small>Daily driver, nothing scary</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="kids"><span class="ico round">🧃</span><span><b>Kids happened</b><small>Crumbs, spills, mystery stains</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="pets"><span class="ico round">🐾</span><span><b>Dog hair everywhere</b><small>And maybe a smell</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="rough"><span class="ico round">😬</span><span><b>Don't judge me</b><small>It's been a while</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
         </div>
-        <div class="row2">
-          <div class="field">
-            <label class="label" for="f-city">City</label>
-            <input id="f-city" name="city" autocomplete="address-level2" required>
-          </div>
-          <div class="field">
-            <label class="label" for="f-zip">ZIP</label>
-            <input id="f-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" required>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label" for="f-notes">Parking notes <span class="hint">(optional)</span></label>
-          <input id="f-notes" name="notes" placeholder="Gate code, which spot, where the keys are">
-        </div>
+      </section>
 
+      <!-- 4 · Where -->
+      <section class="screen" data-screen="zip" hidden>
+        <h2 class="q">Where's the car parked?</h2>
+        <p class="sub">We check there's a pro near you before anything else.</p>
         <div class="field">
-          <label class="label" for="f-name">Your name</label>
-          <input id="f-name" name="name" autocomplete="name" placeholder="First and last" required>
+          <label for="f-zip">ZIP code</label>
+          <input id="f-zip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="50309" required>
         </div>
-        <div class="row2">
-          <div class="field">
-            <label class="label" for="f-phone">Mobile number</label>
-            <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required>
-            <span class="hint">Your pro texts you when they're on the way.</span>
-          </div>
-          <div class="field">
-            <label class="label" for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-            <span class="hint">For your receipt.</span>
-          </div>
+        <p class="form-error" role="alert" data-error="zip" hidden></p>
+        <button class="btn btn-primary" type="button" data-next>Next<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </section>
+
+      <!-- 5 · When -->
+      <section class="screen" data-screen="when" hidden>
+        <h2 class="q">When works best?</h2>
+        <div class="choices" data-choice="when">
+          <button class="choice" type="button" value="asap"><span class="ico round">⚡</span><span><b>Soonest available</b><small>Usually today or tomorrow</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="week"><span class="ico round">📅</span><span><b>This week</b><small>Pick a day after you see the price</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button class="choice" type="button" value="weekend"><span class="ico round">🌤️</span><span><b>This weekend</b><small>Saturday or Sunday</small></span><svg class="arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+      </section>
+
+      <!-- 6 · Contact: the commitment before the reveal -->
+      <section class="screen" data-screen="contact" hidden>
+        <h2 class="q">Where should we <span>text your price?</span></h2>
+        <p class="sub">We'll also text the first open times near you.</p>
+        <div class="field">
+          <label for="f-name">First name</label>
+          <input id="f-name" name="name" autocomplete="given-name" placeholder="Sarah" required>
+        </div>
+        <div class="field">
+          <label for="f-phone">Mobile number</label>
+          <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-5555" required>
         </div>
         <div class="hp" aria-hidden="true"><label for="f-company">Company</label><input id="f-company" name="company" tabindex="-1" autocomplete="off"></div>
-
-        <p class="form-error" role="alert" data-error="3" hidden></p>
-        <div class="nav">
-          <button class="btn btn-quiet" type="button" data-back>Back</button>
-          <button class="btn btn-primary" type="button" data-next>Review &amp; hold my spot</button>
-        </div>
+        <p class="form-error" role="alert" data-error="contact" hidden></p>
+        <button class="btn btn-primary" type="button" data-reveal>Show my price<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <p class="legal">By continuing you agree to get texts from Detail On Demand about this request. Msg &amp; data rates may apply. Reply STOP to opt out. <a href="privacy.html">Privacy</a>.</p>
       </section>
 
-      <!-- Step 4: review and pay -->
-      <section class="panel" data-panel="4" hidden>
-        <div class="panel-head">
-          <h2>Hold your spot</h2>
-          <p>We authorize your card now and charge it only after the detail is finished and you've seen it.</p>
+      <!-- 7 · The price -->
+      <section class="screen" data-screen="price" hidden>
+        <h2 class="q"><span data-first>Sarah</span>, here's your price.</h2>
+        <div class="card">
+          <div class="reveal-top"><div><h2 data-reveal-name>Full Detail</h2><small data-reveal-meta>SUV · about 3 hours · at your place</small></div></div>
+          <div class="reveal-amt" data-reveal-amt>$229</div>
+          <ul class="incl" data-incl></ul>
+          <div class="pay-note"><span class="ico"><svg aria-hidden="true"><use href="#i-card"/></svg></span><div><b>Nothing charged today</b>Your card is held when you book and charged after the detail is done and you've seen it.</div></div>
         </div>
-
-        <div class="review" data-review></div>
-
-        <div class="field">
-          <label class="label" for="f-promo">Promo code <span class="hint">(optional)</span></label>
-          <div class="promo">
-            <input id="f-promo" name="promo" placeholder="DETAIL10" autocomplete="off">
-            <button class="btn btn-quiet" type="button" data-apply-promo>Apply</button>
-          </div>
-          <span class="hint" data-promo-msg></span>
-        </div>
-
-        <div class="assure">
-          <span class="ico"><svg aria-hidden="true"><use href="#i-lock"/></svg></span>
-          <div><b>Nothing is charged today</b><small>Your card is held for the amount shown. If the job doesn't happen, the hold is released. Cancel free up to 24 hours before.</small></div>
-        </div>
-
-        <p class="form-error" role="alert" data-error="4" hidden></p>
-        <div class="nav">
-          <button class="btn btn-quiet" type="button" data-back>Back</button>
-          <button class="btn btn-primary" type="submit" data-pay><svg aria-hidden="true"><use href="#i-lock"/></svg><span data-pay-label>Hold my spot</span></button>
-        </div>
-        <p class="legal">Secure card entry by Stripe. By continuing you agree to get texts about this booking (msg &amp; data rates may apply, reply STOP to opt out) and to our <a href="privacy.html">privacy policy</a>.</p>
+        <button class="btn btn-primary" type="button" data-next>Hold my spot<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="btn btn-ghost" type="button" data-text-me>Text me the details instead</button>
       </section>
 
-      <!-- Fallback when payments aren't connected -->
-      <section class="done" data-done hidden tabindex="-1">
+      <!-- 8 · One optional add-on screen, suggested from their answers -->
+      <section class="screen" data-screen="addons" hidden>
+        <h2 class="q">Want to add anything?</h2>
+        <p class="sub">Optional. Based on what you told us.</p>
+        <div class="chips" data-chips></div>
+        <button class="btn btn-primary" type="button" data-next>Continue<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <button class="btn btn-ghost" type="button" data-skip>Skip</button>
+      </section>
+
+      <!-- 9 · Day and time -->
+      <section class="screen" data-screen="time" hidden>
+        <h2 class="q">Pick a day and time.</h2>
+        <p class="sub">Your pro confirms the exact time by text within the hour.</p>
+        <label class="asap" for="f-asap"><input id="f-asap" type="checkbox" data-asap><span><b>Soonest available</b><small>Skip picking. We text you the first opening.</small></span></label>
+        <div data-schedule>
+          <div class="dates" data-dates></div>
+          <div class="times" style="margin-top:10px" data-times></div>
+        </div>
+        <p class="form-error" role="alert" data-error="time" hidden></p>
+        <button class="btn btn-primary" type="button" data-next>Next<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </section>
+
+      <!-- 10 · Address -->
+      <section class="screen" data-screen="address" hidden>
+        <h2 class="q">Where exactly?</h2>
+        <div class="field"><label for="f-address">Street address</label><input id="f-address" name="address" autocomplete="street-address" placeholder="123 Main St" required></div>
+        <div class="field"><label for="f-city">City</label><input id="f-city" name="city" autocomplete="address-level2" required></div>
+        <div class="field"><label for="f-vehicle">Year, make, model</label><input id="f-vehicle" name="vehicle" placeholder="2021 Honda Odyssey" autocomplete="off"></div>
+        <div class="field"><label for="f-email">Email for your receipt</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+        <p class="form-error" role="alert" data-error="address" hidden></p>
+        <button class="btn btn-primary" type="button" data-next>Review<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </section>
+
+      <!-- 11 · Review and hold -->
+      <section class="screen" data-screen="pay" hidden>
+        <h2 class="q">Hold your spot.</h2>
+        <div class="card">
+          <div class="review" data-review></div>
+          <div class="lines" data-lines></div>
+          <div class="field" style="margin-top:4px"><label for="f-promo" style="color:var(--muted)">Promo code (optional)</label><div style="display:flex;gap:8px"><input id="f-promo" style="background:#fff;color:var(--ink);border-color:var(--line);min-height:50px;text-transform:uppercase" placeholder="DETAIL10"><button class="btn btn-ghost" type="button" style="width:auto;min-height:50px;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)" data-apply-promo>Apply</button></div><span class="hint" style="color:var(--muted)" data-promo-msg></span></div>
+          <div class="pay-note"><span class="ico"><svg aria-hidden="true"><use href="#i-lock"/></svg></span><div><b>Nothing is charged today</b>Held on your card, charged after the job. Cancel free up to 24 hours before.</div></div>
+        </div>
+        <p class="form-error" role="alert" data-error="pay" hidden></p>
+        <button class="btn btn-primary" type="submit" data-pay><svg aria-hidden="true"><use href="#i-lock"/></svg><span data-pay-label>Hold my spot · $229</span></button>
+        <p class="legal">Secure card entry by Stripe. <a href="privacy.html">Privacy policy</a>.</p>
+      </section>
+
+      <!-- Done (text-me path, or payments not connected) -->
+      <section class="screen done" data-screen="done" hidden tabindex="-1">
         <div class="done-mark"><svg aria-hidden="true"><use href="#i-check"/></svg></div>
-        <h2 data-done-title>You're booked in.</h2>
-        <p data-done-body></p>
+        <h2 class="q" data-done-title>You're in line.</h2>
+        <p class="sub" data-done-body></p>
+        <a class="btn btn-primary" href="https://apps.apple.com/us/app/detail-on-demand/id6793673557" target="_blank" rel="noopener" data-appstore>Book faster in the iPhone app</a>
       </section>
     </form>
+  </main>
 
-    <aside class="summary">
-      <div class="card">
-        <div class="sum-head"><h3>Your detail</h3><small data-sum-vehicle>Car</small></div>
-        <div class="sum-lines" data-sum-lines></div>
-        <div class="sum-total"><b>Held on your card</b><span class="amt" data-total>$199</span></div>
-        <p class="sum-note">Charged after the job is done. Tip in the app if you like; 100% goes to your pro.</p>
-      </div>
-      <div class="card">
-        <ul class="trust">
-          <li><span class="ico"><svg aria-hidden="true"><use href="#i-card"/></svg></span><div><b>Charged after, not before</b>The hold is released if the job doesn't happen.</div></li>
-          <li><span class="ico"><svg aria-hidden="true"><use href="#i-shield"/></svg></span><div><b>You know who's coming</b>See your pro's rating before they arrive and message them directly.</div></li>
-          <li><span class="ico"><svg aria-hidden="true"><use href="#i-redo"/></svg></span><div><b>Not right? We come back</b>Tell us within 48 hours and we'll send a pro back to make it right.</div></li>
-        </ul>
-      </div>
-      <div class="card" data-work-card>
-        <div class="work">
-          <figure><img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69136a3fc805225b2d601639/b965af4fa_REELLOGANSBBIZ_4233-2.jpg" alt="Interior after a detail" loading="lazy" data-work-img></figure>
-          <figure><img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69136a3fc805225b2d601639/779145edc_LNLAMBODETAIL_6427.jpg" alt="Exterior after a detail" loading="lazy" data-work-img></figure>
-        </div>
-      </div>
-      <div class="card reviews" data-reviews hidden></div>
-    </aside>
-  </div>
-
-  <div class="wrap">
-    <div class="faq">
-      <h2>Before you book</h2>
-      <details><summary>Do I need to be home?</summary><p>No. As long as your pro can reach the car and has a safe place to work, you can get on with your day.</p></details>
-      <details><summary>What if my time isn't available?</summary><p>Your pro confirms by text within the hour. If that exact slot is taken, you pick another from what's open. Your card isn't charged until the job is done, so a change costs nothing.</p></details>
-      <details><summary>Do you need my water or power?</summary><p>Usually not. Pros bring their own equipment and products. If your pro needs a hose or an outlet at your location, they'll tell you when they confirm.</p></details>
-      <details><summary>What if I need to cancel?</summary><p>Cancel or reschedule free up to 24 hours before your appointment. The hold on your card is released.</p></details>
-      <details><summary>Is there an app?</summary><p>Yes. Detail On Demand is on the iPhone App Store. Once you're booked, you can track the job, message your pro and rebook from the app.</p></details>
-    </div>
-  </div>
-</main>
-
-<footer class="site">
-  <div class="wrap">
-    <div style="display:grid;gap:6px"><span class="brand-word" style="color:#fff">Detail <b>On Demand</b></span><span>Detailing on your demand.</span></div>
-    <div class="foot-links">
-      <a href="tel:+14247227053" data-tel><span data-phone>(424) 722-7053</span></a>
-      <a href="mailto:logannewman@getdetailondemand.com" data-email>logannewman@getdetailondemand.com</a>
-      <a href="privacy.html">Privacy</a>
-      <span>© <span data-year>2026</span> Detail On Demand</span>
-    </div>
-  </div>
-</footer>
-
-<div class="mbar" data-mbar>
-  <div><small data-mbar-label>Held on your card</small><span class="amt" data-total>$199</span></div>
-  <button class="btn btn-primary" type="button" data-mbar-next>Choose a time</button>
+  <footer class="site">
+    <span>© <span data-year>2026</span> Detail On Demand</span>
+    <a href="tel:+14247227053" data-tel><span data-phone>(424) 722-7053</span></a>
+    <a href="privacy.html">Privacy</a>
+  </footer>
 </div>
 
 <script src="config.js"></script>
@@ -501,39 +403,32 @@
   "use strict";
   var cfg = Object.assign({
     city: "", supabaseUrl: "", supabaseAnonKey: "", webhookUrl: "", metaPixelId: "",
-    phoneDisplay: "(424) 722-7053", phoneE164: "+14247227053", email: "logannewman@getdetailondemand.com",
+    phoneDisplay: "(424) 722-7053", phoneE164: "+14247227053",
     appStoreUrl: "https://apps.apple.com/us/app/detail-on-demand/id6793673557",
-    checkoutEndpoint: "/api/create-checkout", promoCode: "DETAIL10", reviews: []
+    checkoutEndpoint: "/api/create-checkout", promoCode: "DETAIL10"
   }, window.DOD_CONFIG || {});
 
-  // Prices, size multipliers and add-ons mirror the customer app's checkout
-  // (BookNow.jsx). The server recomputes the total from these same ids, so a
-  // changed number in the browser can't change what is authorized.
-  var SERVICES = [
-    { id: "interior",         name: "Interior Detail",  base: 149, time: "About 2 hours", desc: "Seats and carpets extracted, vents and crevices cleaned, leather conditioned." },
-    { id: "full_detail",      name: "Full Detail",      base: 199, time: "About 3 hours", desc: "Inside and out. The interior detail plus a full exterior wash, wheels and tires.", popular: true },
-    { id: "paint_correction", name: "Paint Correction", base: 399, time: "About 5 hours", desc: "Machine polishing that removes swirls, light scratches and oxidation." },
-    { id: "ceramic_coating",  name: "Ceramic Coating",  base: 799, time: "About a day",   desc: "A ceramic layer bonded to the paint for lasting gloss and easy washes." }
-  ];
+  // Prices mirror the customer app's checkout (BookNow.jsx); the server
+  // recomputes the total from the same ids before any card is held.
+  var SERVICES = {
+    full_detail:      { name: "Full Detail",      base: 199, time: "about 3 hours", incl: ["Seats and carpets extracted", "Vents, cupholders and crevices", "Glass inside and out", "Hand wash, wheels and tires", "Protective finish on the paint"] },
+    interior:         { name: "Interior Detail",  base: 149, time: "about 2 hours", incl: ["Seats and carpets extracted", "Vents, cupholders and crevices", "Leather cleaned and conditioned", "Glass inside"] },
+    paint_correction: { name: "Paint Correction", base: 399, time: "about 5 hours", incl: ["Wash and decontamination", "Machine polish to remove swirls and light scratches", "Gloss restored and sealed"] }
+  };
   var SIZES = { sedan: { name: "Car", mult: 1.0 }, suv: { name: "SUV", mult: 1.15 }, truck: { name: "Truck", mult: 1.2 }, three_row: { name: "3-Row", mult: 1.3 } };
-  var ADDONS = [
-    { id: "pet_hair",              name: "Pet hair removal",      price: 75,  desc: "Deep extraction of stubborn pet hair" },
-    { id: "stain_removal",         name: "Stain removal",         price: 60,  desc: "Targeted treatment for seats and carpets" },
-    { id: "odor_bomb",             name: "Odor bomb / ozone",     price: 65,  desc: "Smoke, pet and food odors" },
-    { id: "leather_conditioning",  name: "Leather conditioning",  price: 45,  desc: "Nourish and protect leather seats" },
-    { id: "engine_bay",            name: "Engine bay cleaning",   price: 80,  desc: "Degrease and shine" },
-    { id: "headlight_restoration", name: "Headlight restoration", price: 115, desc: "Restore cloudy, yellowed lenses" },
-    { id: "clay_bar",              name: "Clay bar treatment",    price: 55,  desc: "Remove embedded contaminants from paint" },
-    { id: "bug_tar_removal",       name: "Bug & tar removal",     price: 40,  desc: "Dissolve stuck-on bugs and road tar" }
-  ];
-  var PROMOS = { DETAIL10: 0.10 };
+  var ADDONS = {
+    pet_hair: { name: "Pet hair removal", price: 75 }, odor_bomb: { name: "Odor bomb / ozone", price: 65 }, stain_removal: { name: "Stain removal", price: 60 },
+    leather_conditioning: { name: "Leather conditioning", price: 45 }, headlight_restoration: { name: "Headlight restoration", price: 115 }, clay_bar: { name: "Clay bar treatment", price: 55 },
+    engine_bay: { name: "Engine bay cleaning", price: 80 }, bug_tar_removal: { name: "Bug & tar removal", price: 40 }
+  };
+  // Which add-ons to suggest, from the condition answer and the service.
+  var SUGGEST = { pets: ["pet_hair", "odor_bomb"], kids: ["stain_removal", "odor_bomb"], rough: ["stain_removal", "odor_bomb", "headlight_restoration"], light: ["leather_conditioning", "headlight_restoration"] };
+  var PROMOS = { DETAIL10: 0.1 };
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var params = new URLSearchParams(location.search);
   function store(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } }
-
-  // Meta Pixel
   function track(ev, data, custom) { if (typeof window.fbq === "function") window.fbq(custom ? "trackCustom" : "track", ev, data || {}); }
   if (cfg.metaPixelId) {
     !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
@@ -543,50 +438,162 @@
   UTM.forEach(function (k) { if (params.get(k)) store("dod_" + k, params.get(k)); });
   function attribution() { var o = {}; UTM.forEach(function (k) { o[k] = params.get(k) || store("dod_" + k) || null; }); return o; }
 
-  // Contact details from config
   $$("[data-phone]").forEach(function (el) { el.textContent = cfg.phoneDisplay; });
   $$("[data-tel]").forEach(function (el) { el.href = "tel:" + cfg.phoneE164; });
-  $$("[data-email]").forEach(function (el) { el.href = "mailto:" + cfg.email; el.textContent = cfg.email; });
+  $$("[data-appstore]").forEach(function (el) { el.href = cfg.appStoreUrl; });
   $$("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
-  $$("[data-track]").forEach(function (el) { el.addEventListener("click", function () { track(el.getAttribute("data-track")); }); });
   var city = (params.get("city") || cfg.city || "").trim().slice(0, 40);
-  if (city) { $("[data-city-line]").textContent = "Now booking in " + city; document.title = "Book a Mobile Detail in " + city + " | Detail On Demand"; $("#f-city").value = city; }
+  if (city) { $("[data-city-line]").textContent = "Now booking in " + city; document.title = "Mobile Detailing in " + city + " | Detail On Demand"; $("#f-city").value = city; }
   function onFail(img, fn) { if (img.complete && img.naturalWidth === 0) fn(); else img.addEventListener("error", fn); }
-  $$("[data-logo]").forEach(function (img) { onFail(img, function () { img.remove(); }); });
-  var workLeft = $$("[data-work-img]").length;
-  $$("[data-work-img]").forEach(function (img) { onFail(img, function () { img.closest("figure").remove(); if (--workLeft === 0) $("[data-work-card]").hidden = true; }); });
-  if (Array.isArray(cfg.reviews) && cfg.reviews.length) {
-    var rb = $("[data-reviews]");
-    cfg.reviews.slice(0, 3).forEach(function (r) {
-      var c = document.createElement("blockquote"); c.className = "review-card"; c.style.margin = "0";
-      var s = document.createElement("div"); s.className = "stars"; s.textContent = "★★★★★";
-      var p = document.createElement("p"); p.textContent = "“" + r.text + "”";
-      var f = document.createElement("footer"); f.textContent = [r.name, r.car].filter(Boolean).join(" · ");
-      c.append(s, p, f); rb.appendChild(c);
+  $$("[data-logo], [data-optional-img]").forEach(function (img) { onFail(img, function () { img.remove(); }); });
+
+  // ── State and screens ───────────────────────────────────
+  var ORDER = ["hero", "size", "service", "condition", "zip", "when", "contact", "price", "addons", "time", "address", "pay", "done"];
+  var QUESTIONS = ["size", "service", "condition", "zip", "when", "contact"];
+  var state = { size: null, service: null, condition: null, when: null, addons: [], asap: false, date: null, time: null, promo: null, screen: "hero", leadSaved: false };
+  var history = [];
+
+  function show(name, push) {
+    if (push !== false && state.screen !== name) history.push(state.screen);
+    state.screen = name;
+    $$("[data-screen]").forEach(function (s) { s.hidden = s.getAttribute("data-screen") !== name; });
+    var qi = QUESTIONS.indexOf(name);
+    var prog = $("[data-progress]");
+    if (name === "hero" || name === "done") { prog.hidden = true; }
+    else {
+      prog.hidden = false;
+      var total = QUESTIONS.length, pos = qi >= 0 ? qi + 1 : total;
+      $("[data-bar]").style.width = Math.round(pos / total * 100) + "%";
+      $("[data-step-label]").textContent = qi >= 0 ? pos + " of " + total : (name === "price" ? "Your price" : "Booking");
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
+    var first = $("input:not([tabindex='-1'])", $('[data-screen="' + name + '"]'));
+    if (first && matchMedia("(min-width: 700px)").matches) first.focus({ preventScroll: true });
+    track("Screen_" + name, {}, true);
+  }
+  $("[data-back]").addEventListener("click", function () { var prev = history.pop() || "hero"; show(prev, false); });
+  $("[data-home]").addEventListener("click", function (e) { e.preventDefault(); history = []; show("hero", false); });
+  $("[data-start]").addEventListener("click", function () { show("size"); });
+
+  // One-tap multiple choice screens
+  $$("[data-choice]").forEach(function (group) {
+    var key = group.getAttribute("data-choice");
+    $$(".choice", group).forEach(function (b) {
+      b.addEventListener("click", function () {
+        $$(".choice", group).forEach(function (x) { x.classList.toggle("on", x === b); });
+        state[key] = b.value;
+        setTimeout(function () { show(ORDER[ORDER.indexOf(key === "when" ? "when" : key) + 1]); }, 140);
+      });
     });
-    rb.hidden = false;
+  });
+
+  function digits(s) { return (s || "").replace(/\D/g, ""); }
+  function err(name, msg, field) { var box = $('[data-error="' + name + '"]'); box.textContent = msg; box.hidden = false; if (field) { field.setAttribute("aria-invalid", "true"); field.focus(); } return false; }
+  function clearErr(name) { var box = $('[data-error="' + name + '"]'); if (box) box.hidden = true; $$("input", $('[data-screen="' + name + '"]')).forEach(function (i) { i.removeAttribute("aria-invalid"); }); }
+  function phone10() { var p = digits($("#f-phone").value); if (p.length === 11 && p[0] === "1") p = p.slice(1); return p; }
+
+  function validate(name) {
+    clearErr(name);
+    if (name === "zip") { if (digits($("#f-zip").value).length !== 5) return err("zip", "Enter the 5-digit ZIP where the car will be.", $("#f-zip")); return true; }
+    if (name === "contact") {
+      if (!$("#f-name").value.trim()) return err("contact", "Add your first name.", $("#f-name"));
+      if (phone10().length !== 10) return err("contact", "Enter a 10-digit mobile number.", $("#f-phone"));
+      return true;
+    }
+    if (name === "time") { if (!state.asap && !state.time) return err("time", "Pick a start time, or tick Soonest available."); return true; }
+    if (name === "address") {
+      if (!$("#f-address").value.trim()) return err("address", "Add the street address.", $("#f-address"));
+      if (!$("#f-city").value.trim()) return err("address", "Add the city.", $("#f-city"));
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim())) return err("address", "Enter a valid email for your receipt.", $("#f-email"));
+      return true;
+    }
+    return true;
+  }
+  $$("[data-next]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var cur = state.screen; if (!validate(cur)) return;
+      if (cur === "price") { buildAddons(); show("addons"); return; }
+      if (cur === "addons") { show(state.when === "asap" ? "address" : "time"); if (state.when === "asap") { state.asap = true; $("[data-asap]").checked = true; $("[data-schedule]").hidden = true; } return; }
+      show(ORDER[ORDER.indexOf(cur) + 1]);
+    });
+  });
+  $("[data-skip]").addEventListener("click", function () { state.addons = []; $$("[data-chips] input").forEach(function (c) { c.checked = false; }); $("[data-next]", $('[data-screen="addons"]')).click(); });
+  $$("#f-zip, #f-name, #f-phone").forEach(function (i) { i.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); var s = $('[data-screen="' + state.screen + '"]'); ($("[data-next]", s) || $("[data-reveal]", s)).click(); } }); });
+
+  // ── Pricing ─────────────────────────────────────────────
+  function svcId() { return state.service === "not_sure" || !state.service ? "full_detail" : state.service; }
+  function quote() {
+    var s = SERVICES[svcId()], base = Math.round(s.base * SIZES[state.size || "sedan"].mult);
+    var adds = state.addons.map(function (id) { return ADDONS[id]; });
+    var sub = base + adds.reduce(function (n, a) { return n + a.price; }, 0);
+    var disc = state.promo ? Math.round(sub * PROMOS[state.promo]) : 0;
+    return { svc: s, base: base, adds: adds, sub: sub, disc: disc, total: sub - disc };
+  }
+  function money(n) { return "$" + n; }
+
+  // ── Reveal: save the lead first, then show the price ────
+  $("[data-reveal]").addEventListener("click", function () {
+    if (!validate("contact")) return;
+    var q = quote(), first = $("#f-name").value.trim().split(/\s+/)[0];
+    $("[data-first]").textContent = first;
+    $("[data-reveal-name]").textContent = q.svc.name + (state.service === "not_sure" ? " (our pick)" : "");
+    $("[data-reveal-meta]").textContent = SIZES[state.size].name + " · " + q.svc.time + " · at your place";
+    $("[data-reveal-amt]").textContent = money(q.base);
+    var ul = $("[data-incl]"); ul.innerHTML = "";
+    q.svc.incl.forEach(function (t) { var li = document.createElement("li"); li.innerHTML = '<svg aria-hidden="true"><use href="#i-check"/></svg>'; li.appendChild(document.createTextNode(t)); ul.appendChild(li); });
+    if (!$("#f-company").value) { saveLead("price_shown"); track("Lead", { value: q.base, currency: "USD", content_name: q.svc.name }); }
+    show("price");
+  });
+
+  function leadRow(status) {
+    var q = quote();
+    return Object.assign({
+      name: $("#f-name").value.trim().slice(0, 120), phone: phone10(), zip: digits($("#f-zip").value),
+      service: svcId(), vehicle_size: state.size, condition: state.condition, when_pref: state.when,
+      addons: state.addons.join(","), quoted_price: q.total, city: city || null, status: status,
+      sms_consent: true, page_url: location.href.slice(0, 500)
+    }, attribution());
+  }
+  function saveLead(status) {
+    var row = leadRow(status), jobs = [];
+    if (cfg.supabaseUrl && cfg.supabaseAnonKey) {
+      // leads.sql columns only; condition/when ride in utm_term-free `notes`-less row via quiz_json
+      var sb = { name: row.name, phone: row.phone, zip: row.zip, service: row.service, vehicle_size: row.vehicle_size, quoted_price: row.quoted_price, city: row.city, sms_consent: true, marketing_opt_in: false, page_url: row.page_url };
+      UTM.forEach(function (k) { sb[k] = row[k]; });
+      jobs.push(fetch(cfg.supabaseUrl.replace(/\/$/, "") + "/rest/v1/leads", { method: "POST", headers: { apikey: cfg.supabaseAnonKey, Authorization: "Bearer " + cfg.supabaseAnonKey, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(sb) }));
+    }
+    if (cfg.webhookUrl) {
+      var body = new URLSearchParams();
+      Object.keys(row).forEach(function (k) { if (row[k] !== null && row[k] !== undefined) body.append(k, String(row[k])); });
+      jobs.push(fetch(cfg.webhookUrl, { method: "POST", mode: "no-cors", body: body }));
+    }
+    state.leadSaved = true;
+    return Promise.allSettled(jobs);
   }
 
-  // ── Build the choice lists ──────────────────────────────
-  var state = { service: params.get("service") && SERVICES.some(function (s) { return s.id === params.get("service"); }) ? params.get("service") : "full_detail", size: "sedan", addons: [], asap: false, date: null, time: null, promo: null, step: 1 };
-
-  var svcBox = $("[data-services]");
-  SERVICES.forEach(function (s) {
-    var l = document.createElement("label"); l.className = "tile";
-    l.innerHTML = '<input type="radio" name="service" value="' + s.id + '"><span>' + (s.popular ? '<span class="t-tag">Most popular</span>' : '') + '<span class="t-name"><span>' + s.name + '</span><span class="t-price" data-svc-price="' + s.id + '"></span></span><span class="t-desc">' + s.desc + ' ' + s.time + '.</span></span>';
-    svcBox.appendChild(l);
-  });
-  var addBox = $("[data-addons]");
-  ADDONS.forEach(function (a) {
-    var l = document.createElement("label"); l.className = "addon";
-    l.innerHTML = '<input type="checkbox" name="addon" value="' + a.id + '"><span><b>' + a.name + '</b><small>' + a.desc + '</small></span><span class="a-price">+$' + a.price + '</span>';
-    addBox.appendChild(l);
+  // "Text me instead": the lead is already saved; just confirm.
+  $("[data-text-me]").addEventListener("click", function () {
+    saveLead("text_me");
+    finish("We'll text " + $("#f-phone").value.trim() + " within the hour with open times near " + digits($("#f-zip").value) + ". Reply to that text to book.");
   });
 
-  // Next 7 days, 30-minute starts 8:00 to 3:30, same as the app.
+  // ── Add-ons suggested from the answers ──────────────────
+  function buildAddons() {
+    var ids = (SUGGEST[state.condition] || SUGGEST.light).slice();
+    if (svcId() === "paint_correction") ids = ["clay_bar", "headlight_restoration", "bug_tar_removal"];
+    var box = $("[data-chips]"); box.innerHTML = "";
+    ids.forEach(function (id) {
+      var a = ADDONS[id], l = document.createElement("label"); l.className = "chip";
+      l.innerHTML = '<input type="checkbox" value="' + id + '"><b>' + a.name + '</b><span class="p">+$' + a.price + '</span>';
+      box.appendChild(l);
+    });
+    $$("input", box).forEach(function (c) { c.addEventListener("change", function () { state.addons = $$("[data-chips] input:checked").map(function (x) { return x.value; }); }); });
+  }
+
+  // ── Day and time (next 7 days, 30-min starts 8:00 to 3:30) ──
   var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var days = [], today = new Date();
-  for (var i = 0; i < 7; i++) { var d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + i); days.push(d); }
+  var today = new Date(), days = [];
+  for (var i = 0; i < 7; i++) days.push(new Date(today.getFullYear(), today.getMonth(), today.getDate() + i));
   function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   var dateBox = $("[data-dates]");
   days.forEach(function (d, i) {
@@ -598,180 +605,77 @@
   var SLOTS = []; for (var h = 8; h < 16; h++) { SLOTS.push(h + ":00"); SLOTS.push(h + ":30"); }
   function pretty(t) { var p = t.split(":"), hh = +p[0]; return (hh > 12 ? hh - 12 : hh) + ":" + p[1] + (hh >= 12 ? " PM" : " AM"); }
   var timeBox = $("[data-times]");
-  SLOTS.forEach(function (t) {
-    var l = document.createElement("label"); l.className = "time";
-    l.innerHTML = '<input type="radio" name="time" value="' + t + '"><span>' + pretty(t) + '</span>';
-    timeBox.appendChild(l);
-  });
+  SLOTS.forEach(function (t) { var l = document.createElement("label"); l.className = "time"; l.innerHTML = '<input type="radio" name="time" value="' + t + '"><span>' + pretty(t) + '</span>'; timeBox.appendChild(l); });
   function refreshTimes() {
-    // Today: only slots at least 2 hours out.
-    var isToday = state.date === iso(days[0]);
-    var cutoff = new Date(); cutoff.setHours(cutoff.getHours() + 2);
-    $$("input[name=time]").forEach(function (r) {
-      var p = r.value.split(":"), t = new Date(today.getFullYear(), today.getMonth(), today.getDate(), +p[0], +p[1]);
-      r.disabled = isToday && t < cutoff;
-      if (r.disabled && r.checked) { r.checked = false; state.time = null; }
-    });
+    var isToday = state.date === iso(days[0]), cutoff = new Date(); cutoff.setHours(cutoff.getHours() + 2);
+    $$("input[name=time]").forEach(function (r) { var p = r.value.split(":"), t = new Date(today.getFullYear(), today.getMonth(), today.getDate(), +p[0], +p[1]); r.disabled = isToday && t < cutoff; if (r.disabled && r.checked) { r.checked = false; state.time = null; } });
   }
   refreshTimes();
-
-  // ── Pricing ─────────────────────────────────────────────
-  function svc() { return SERVICES.filter(function (s) { return s.id === state.service; })[0]; }
-  function quote() {
-    var base = Math.round(svc().base * SIZES[state.size].mult);
-    var addons = state.addons.map(function (id) { return ADDONS.filter(function (a) { return a.id === id; })[0]; });
-    var addTotal = addons.reduce(function (n, a) { return n + a.price; }, 0);
-    var subtotal = base + addTotal;
-    var discount = state.promo ? Math.round(subtotal * PROMOS[state.promo]) : 0;
-    return { base: base, addons: addons, addTotal: addTotal, subtotal: subtotal, discount: discount, total: subtotal - discount };
-  }
-  function money(n) { return "$" + n; }
-  function render() {
-    SERVICES.forEach(function (s) { $('[data-svc-price="' + s.id + '"]').textContent = money(Math.round(s.base * SIZES[state.size].mult)); });
-    $$("input[name=service]").forEach(function (r) { r.checked = r.value === state.service; });
-    var q = quote();
-    var lines = $("[data-sum-lines]"); lines.innerHTML = "";
-    function line(k, v) { var d = document.createElement("div"); var a = document.createElement("span"); a.className = "k"; a.textContent = k; var b = document.createElement("span"); b.className = "v"; b.textContent = v; d.append(a, b); lines.appendChild(d); }
-    line(svc().name + " · " + SIZES[state.size].name, money(q.base));
-    q.addons.forEach(function (a) { line(a.name, "+" + money(a.price)); });
-    if (q.discount) line(state.promo + " (10% off)", "−" + money(q.discount));
-    line("When", state.asap ? "Soonest available" : (state.time ? prettyDate(state.date) + ", " + pretty(state.time) : prettyDate(state.date)));
-    $("[data-sum-vehicle]").textContent = ($("#f-vehicle").value.trim() || SIZES[state.size].name).slice(0, 28);
-    $$("[data-total]").forEach(function (el) { el.textContent = money(q.total); });
-    $("[data-pay-label]").textContent = "Hold my spot · " + money(q.total);
-  }
+  $$("input[name=date]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) { state.date = r.value; refreshTimes(); } }); });
+  $$("input[name=time]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) state.time = r.value; }); });
+  var asap = $("[data-asap]");
+  asap.addEventListener("change", function () { state.asap = asap.checked; $("[data-schedule]").hidden = asap.checked; });
   function prettyDate(s) { var p = s.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]); return (s === iso(days[0]) ? "Today" : DOW[d.getDay()]) + " " + MON[d.getMonth()] + " " + d.getDate(); }
 
-  $$("input[name=service]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) { state.service = r.value; render(); } }); });
-  $$("[data-size]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) { state.size = r.value; render(); } }); });
-  $$("input[name=addon]").forEach(function (c) { c.addEventListener("change", function () { state.addons = $$("input[name=addon]:checked").map(function (x) { return x.value; }); render(); }); });
-  $$("input[name=date]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) { state.date = r.value; refreshTimes(); render(); } }); });
-  $$("input[name=time]").forEach(function (r) { r.addEventListener("change", function () { if (r.checked) { state.time = r.value; render(); } }); });
-  $("#f-vehicle").addEventListener("input", render);
-  var asap = $("[data-asap]");
-  asap.addEventListener("change", function () { state.asap = asap.checked; $("[data-schedule]").hidden = asap.checked; render(); });
-  render();
-
-  // ── Steps ───────────────────────────────────────────────
-  var NEXT_LABEL = { 1: "Choose a time", 2: "Where's the car?", 3: "Review & hold my spot", 4: "Hold my spot" };
-  function showStep(n) {
-    state.step = n;
-    $$("[data-panel]").forEach(function (p) { p.hidden = +p.getAttribute("data-panel") !== n; });
-    $$("[data-steps] li").forEach(function (li, i) { li.className = i + 1 < n ? "done" : i + 1 === n ? "now" : ""; });
-    $("[data-mbar-next]").textContent = NEXT_LABEL[n];
-    $("[data-mbar-next]").hidden = n === 4;
-    if (n === 4) buildReview();
-    $("#book").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-    track("Step" + n, {}, true);
-  }
-  function digits(s) { return (s || "").replace(/\D/g, ""); }
-  function err(n, msg, field) {
-    var box = $('[data-error="' + n + '"]'); if (box) { box.textContent = msg; box.hidden = false; }
-    if (field) { field.setAttribute("aria-invalid", "true"); field.focus(); }
-    return false;
-  }
-  function clearErr(n) { var box = $('[data-error="' + n + '"]'); if (box) box.hidden = true; $$("input", $('[data-panel="' + n + '"]')).forEach(function (i) { i.removeAttribute("aria-invalid"); }); }
-  function validate(n) {
-    clearErr(n);
-    if (n === 1) { if (!$("#f-vehicle").value.trim()) { $("#f-vehicle").setAttribute("aria-invalid", "true"); $("#f-vehicle").focus(); return false; } return true; }
-    if (n === 2) { if (!state.asap && !state.time) return err(2, "Pick a start time, or choose Soonest available."); return true; }
-    if (n === 3) {
-      if (!$("#f-address").value.trim()) return err(3, "Add the street address where the car will be.", $("#f-address"));
-      if (!$("#f-city").value.trim()) return err(3, "Add the city.", $("#f-city"));
-      if (digits($("#f-zip").value).length !== 5) return err(3, "Enter the 5-digit ZIP.", $("#f-zip"));
-      if (!$("#f-name").value.trim()) return err(3, "Add your name.", $("#f-name"));
-      var ph = digits($("#f-phone").value); if (ph.length === 11 && ph[0] === "1") ph = ph.slice(1);
-      if (ph.length !== 10) return err(3, "Enter a 10-digit mobile number.", $("#f-phone"));
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("#f-email").value.trim())) return err(3, "Enter a valid email for your receipt.", $("#f-email"));
-      return true;
-    }
-    return true;
-  }
-  $$("[data-next]").forEach(function (b) { b.addEventListener("click", function () { if (validate(state.step)) showStep(state.step + 1); }); });
-  $$("[data-back]").forEach(function (b) { b.addEventListener("click", function () { showStep(state.step - 1); }); });
-  $("[data-mbar-next]").addEventListener("click", function () { if (validate(state.step)) showStep(state.step + 1); });
-
+  // ── Review ──────────────────────────────────────────────
   function buildReview() {
-    var q = quote(), box = $("[data-review]"); box.innerHTML = "";
-    function row(k, v) { var d = document.createElement("div"); d.className = "review-row"; var a = document.createElement("span"); a.textContent = k; var b = document.createElement("span"); b.textContent = v; d.append(a, b); box.appendChild(d); }
-    row("Service", svc().name + " · " + SIZES[state.size].name + " · " + $("#f-vehicle").value.trim());
-    if (q.addons.length) row("Add-ons", q.addons.map(function (a) { return a.name; }).join(", "));
+    var q = quote(), r = $("[data-review]"), l = $("[data-lines]"); r.innerHTML = ""; l.innerHTML = "";
+    function row(k, v) { var d = document.createElement("div"); d.className = "review-row"; var a = document.createElement("span"); a.textContent = k; var b = document.createElement("span"); b.textContent = v; d.append(a, b); r.appendChild(d); }
+    function line(k, v) { var d = document.createElement("div"); var a = document.createElement("span"); a.className = "k"; a.textContent = k; var b = document.createElement("span"); b.className = "v"; b.textContent = v; d.append(a, b); l.appendChild(d); }
+    row("Service", q.svc.name + " · " + SIZES[state.size].name + ($("#f-vehicle").value.trim() ? " · " + $("#f-vehicle").value.trim() : ""));
     row("When", state.asap ? "Soonest available" : prettyDate(state.date) + " at " + pretty(state.time));
     row("Where", $("#f-address").value.trim() + ", " + $("#f-city").value.trim() + " " + digits($("#f-zip").value));
-    row("Text updates to", $("#f-phone").value.trim());
+    line(q.svc.name, money(q.base));
+    q.adds.forEach(function (a) { line(a.name, "+" + money(a.price)); });
+    if (q.disc) line(state.promo + " (10% off)", "−" + money(q.disc));
+    line("Held on your card", money(q.total));
+    $("[data-pay-label]").textContent = "Hold my spot · " + money(q.total);
   }
-
-  // Promo
+  var origShow = show;
+  show = function (name, push) { origShow(name, push); if (name === "pay") buildReview(); };
   $("[data-apply-promo]").addEventListener("click", function () {
     var code = $("#f-promo").value.trim().toUpperCase(), msg = $("[data-promo-msg]");
     if (PROMOS[code]) { state.promo = code; msg.textContent = code + " applied: 10% off."; msg.style.color = "var(--good)"; }
     else { state.promo = null; msg.textContent = code ? "That code isn't valid." : ""; msg.style.color = "var(--bad)"; }
-    render(); buildReview();
+    buildReview();
   });
 
-  // ── Submit: save the lead, then hand off to Stripe Checkout ──
-  function payload() {
-    var ph = digits($("#f-phone").value); if (ph.length === 11 && ph[0] === "1") ph = ph.slice(1);
-    var q = quote();
-    return Object.assign({
-      service: state.service, vehicle_size: state.size, vehicle: $("#f-vehicle").value.trim().slice(0, 80),
-      addons: state.addons, asap: state.asap, date: state.asap ? null : state.date, time: state.asap ? null : state.time,
-      address: $("#f-address").value.trim().slice(0, 160), city: $("#f-city").value.trim().slice(0, 60), zip: digits($("#f-zip").value),
-      notes: $("#f-notes").value.trim().slice(0, 200), name: $("#f-name").value.trim().slice(0, 120), phone: ph, email: $("#f-email").value.trim().slice(0, 160),
-      promo: state.promo, quoted_price: q.total, page_url: location.href.slice(0, 500)
-    }, attribution());
-  }
-  function saveLead(row) {
-    var jobs = [];
-    if (cfg.supabaseUrl && cfg.supabaseAnonKey) {
-      jobs.push(fetch(cfg.supabaseUrl.replace(/\/$/, "") + "/rest/v1/bookings_web", {
-        method: "POST", headers: { apikey: cfg.supabaseAnonKey, Authorization: "Bearer " + cfg.supabaseAnonKey, "Content-Type": "application/json", Prefer: "return=minimal" },
-        body: JSON.stringify(Object.assign({}, row, { addons: row.addons.join(",") }))
-      }));
-    }
-    if (cfg.webhookUrl) {
-      var body = new URLSearchParams();
-      Object.keys(row).forEach(function (k) { if (row[k] !== null && row[k] !== undefined) body.append(k, Array.isArray(row[k]) ? row[k].join(",") : String(row[k])); });
-      jobs.push(fetch(cfg.webhookUrl, { method: "POST", mode: "no-cors", body: body }));
-    }
-    return Promise.allSettled(jobs);
-  }
-
-  $("#book").addEventListener("submit", function (e) {
+  // ── Hold the card through Stripe Checkout ───────────────
+  $("#flow").addEventListener("submit", function (e) {
     e.preventDefault();
-    if (state.step !== 4) return;
-    clearErr(4);
-    if ($("#f-company").value) return finish("held");
-    var btn = $("[data-pay]"), row = payload();
+    if (state.screen !== "pay") return;
+    clearErr("pay");
+    if ($("#f-company").value) return finish("We'll text you within the hour.");
+    var btn = $("[data-pay]"), q = quote();
+    var row = Object.assign(leadRow("checkout_started"), {
+      addons: state.addons, asap: state.asap, date: state.asap ? null : state.date, time: state.asap ? null : state.time,
+      address: $("#f-address").value.trim().slice(0, 160), city: $("#f-city").value.trim().slice(0, 60),
+      vehicle: $("#f-vehicle").value.trim().slice(0, 80), email: $("#f-email").value.trim().slice(0, 160), promo: state.promo
+    });
     btn.disabled = true; $("[data-pay-label]").textContent = "One moment…";
-    track("InitiateCheckout", { value: row.quoted_price, currency: "USD", content_name: svc().name });
-    saveLead(row).then(function () {
+    track("InitiateCheckout", { value: q.total, currency: "USD", content_name: q.svc.name });
+    saveLead("checkout_started").then(function () {
       return fetch(cfg.checkoutEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(row) });
-    }).then(function (res) {
-      if (!res.ok) throw new Error("checkout " + res.status);
-      return res.json();
-    }).then(function (data) {
-      if (!data || !data.url) throw new Error("no url");
-      location.href = data.url;
-    }).catch(function () {
-      btn.disabled = false; render();
-      if (!cfg.checkoutEndpoint) return finish("nopay");
-      err(4, "We couldn't open the card form. Try again, or text " + cfg.phoneDisplay + " and we'll book you by hand.");
+    }).then(function (res) { if (!res.ok) throw new Error(res.status); return res.json(); })
+    .then(function (d) { if (!d || !d.url) throw new Error("no url"); location.href = d.url; })
+    .catch(function () {
+      btn.disabled = false; buildReview();
+      if (!cfg.checkoutEndpoint) return finish("We'll text " + $("#f-phone").value.trim() + " within the hour to confirm your time and take card details securely.");
+      err("pay", "We couldn't open the card form. Try again, or text " + cfg.phoneDisplay + " and we'll book you by hand.");
     });
   });
 
-  function finish(mode) {
-    $$("[data-panel]").forEach(function (p) { p.hidden = true; });
-    $("[data-steps]").hidden = true; $("[data-mbar]").hidden = true;
-    var d = $("[data-done]"); d.hidden = false;
-    var first = ($("#f-name").value.trim().split(/\s+/)[0]) || "there";
-    $("[data-done-title]").textContent = "Request received, " + first + ".";
-    $("[data-done-body]").textContent = mode === "nopay"
-      ? "We'll text " + $("#f-phone").value.trim() + " within the hour to confirm your time and take payment details securely."
-      : "We'll text you within the hour to confirm your time.";
-    d.focus({ preventScroll: true });
-    $("#book").scrollIntoView({ block: "start" });
+  function finish(body) {
+    var first = $("#f-name").value.trim().split(/\s+/)[0] || "there";
+    $("[data-done-title]").textContent = "You're in line, " + first + ".";
+    $("[data-done-body]").textContent = body;
+    show("done");
+    $('[data-screen="done"]').focus({ preventScroll: true });
   }
+
+  // Deep link from an ad: ?service=interior preselects and skips that question.
+  var pre = params.get("service");
+  if (pre && (SERVICES[pre] || pre === "not_sure")) state.service = pre;
 })();
 </script>
 </body>

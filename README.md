@@ -4,7 +4,7 @@ The Facebook and Instagram ad kit and the landing page those ads point to.
 
 | File | What it is |
 |---|---|
-| [`index.html`](index.html) | **The booking page** ads point to: service and vehicle → day and time → address and contact → card held through Stripe Checkout (charged after the job, like the app). |
+| [`index.html`](index.html) | **The landing page** ads point to. A one-question-per-screen quiz: vehicle → need → condition → ZIP → when → name and phone → the price is revealed (lead saved here) → one suggested add-on screen → day and time → address → card held through Stripe Checkout (charged after the job, like the app). |
 | [`quote.html`](quote.html) | The lighter lead-only variant: a 30-second price form, no card. Keep it for an A/B test against the booking page. |
 | [`thanks.html`](thanks.html) | Confirmation after the card is held. Fires the Pixel's Schedule event. |
 | [`api/create-checkout.js`](api/create-checkout.js) | Vercel function that recomputes the price server-side and opens Stripe Checkout with `capture_method: manual`. |
